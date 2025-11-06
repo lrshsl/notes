@@ -28,8 +28,10 @@ $
 === Alternating series
 
 #note(title: "Definition")[
-  A series is called alternating if it has a form $ sum_(i=0)^oo ((-1)^i b_i or sum (-1)^(i+1) b_i$
-  with $b_i >= 0 h1 forall i$
+  A series is called alternating if it has a form $
+    sum_(i=0)^oo (-1)^i b_i "or"
+    sum_(i=0)^oo (-1)^(i+1) b_i
+  $ with $b_i >= 0 h1 forall i$
 ]
 
 
