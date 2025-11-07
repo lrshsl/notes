@@ -125,5 +125,8 @@ $
   )
 $
 
-Through the monotone 
+Through the alternating sequence convergence theorem we know that if
+$
+  lim_(n -> oo) a_n = 0
+$
 

@@ -1,6 +1,10 @@
 #import "../../template.typ" : *
 
-#set page(columns: 2)
+#let is_draft = true
+
+#show: summary.with(
+  subject: "Analysis I",
+)
 
 = Important terms
 
@@ -12,17 +16,20 @@
 
 #important[$ ||x| - |y|| <= |x - y| $]
 
+#pagebreak()
 = Sequences
 
 $ (x_n)_(n>=1 in NN) in RR $
 
 == Convergence
 
-$(x_n)$ converges to limit $l$ iff $ forall epsilon > 0 in RR h1 exists N in NN "st" forall n > N in NN \ |x_n - l| < epsilon $
+#note(title: "Definition")[
+  $(x_n)$ converges to limit $l$ iff $ forall epsilon > 0 in RR h0 exists N in NN "st" forall n > N in NN \ |x_n - l| < epsilon $
 
-we write $limits(lim)_(n->oo) (x_n) = l$ or $(x_n) -->^(n->oo) l$
+  We write $lim_(n->oo) (x_n) = l$ or $(x_n) -->^(n->oo) l$
 
-If no such limit exists, $(x_n)$ diverges.
+  If no such limit exists, $(x_n)$ diverges.
+]
 
 === Properties
 
@@ -76,24 +83,12 @@ If $(x_n) --> a$ and $(y_n) --> b$ then
 
 == Alternating sequence
 
-#note(title: "Definition")[
-  A series is called alternating if it has a form $
-    sum_(i=0)^oo (-1)^i b_i "or"
-    sum_(i=0)^oo (-1)^(i+1) b_i
-  $ with $b_i >= 0 h0 forall i$
-]
-
-
-#note(title: "Alternative definition")[
-  A series is alternating if $a_k a_(k+1) <= 0 h1 forall k in NN$
-]
-
-#note(title: "Alternating sequence convergence theorem")[
-  Let $a_n = sum_(i=0)^oo a_i$ be alternating st:
-  1. $lim_(i=>oo) a_i = 0$
-  2. $|a_(i+1)| <= |a_i| h1 forall i in NN$
-
-  Then $a_n$ converges.
+#note(title: "Convergence of an alternating sequence")[
+  An alternating sequence converges iff its magnitude converges (to zero).
+  Alternating sequences can only converge to zero.
+  $
+    lim_(n -> oo) a_n = 0 <==> lim_(n -> oo) |a_n| = 0
+  $
 ]
 
 == Cauchy criterion
@@ -103,7 +98,7 @@ If $(x_n) --> a$ and $(y_n) --> b$ then
   $
     (x_n) "converges" \
     <==> \
-    forall epsilon > 0 h1 exists N "st" forall n > N
+    forall epsilon > 0 h1 exists N "st" forall n,m > N
     \ |x_n - x_m| < epsilon
   $
 ]
@@ -124,6 +119,7 @@ Let $(x_n) --> a$ and $(y_n) --> a$.
 
 #important[If $x_n <= a_n <= y_n forall n$, then $a_n --> a$]
 
+#pagebreak()
 = Series
 
 A infinite sum (series) $s_n$ of a sequence $x_n$ is defined as a sequence of
@@ -134,7 +130,7 @@ $
   lim_(n->oo) s_n = sum_(i=0)^oo (x_n)_i
 $
 
-Absolutely convergent $<==> limits(sum)_(i=0)^oo |(x_n)_i|$ converges.
+Absolutely convergent $<==> sum_(i=0)^oo |(x_n)_i|$ converges.
 
 $x_n$ is absolutely convergent $==>$ $x_n$ converges
 
@@ -180,13 +176,13 @@ Let $L = lim_(n->oo) |x_(n+1) / x_n|$
 #note[Especially useful for factorials ($n!$) and exponentials ($c^n$).]
 
 === Alternating Series Test (Leibniz)
+
 #note(title: "AST")[
   The series $sum (-1)^n x_n$ (with $x_n > 0$)
   converges if *both* are true:
   1. $x_(n+1) <= x_n$ for all large $n$ (non-increasing)
   2. $lim_(n->oo) x_n = 0$
 ]
-
 
 
 == Examples
@@ -206,7 +202,7 @@ $
       & = 1 / (1 - q) (1 - q^(n+1))
 $
 
-if $q < 1$ then $s_n$ converges to $1 / (1 - q)$
+if $|q| < 1$ then $s_n$ converges to $1 / (1 - q)$
 
 === Harmonic series
 
@@ -219,7 +215,7 @@ $
 
 $
               x_n & = 1/(n!) \
-  lim_(n->oo) s_n & = sum_(n=1)^oo 1/(n!) = lim_(n->oo) (1 + 1/n)^n = e
+  lim_(n->oo) s_n & = sum_(n=0)^oo 1/(n!) = lim_(n->oo) (1 + 1/n)^n = e
 $
 
 #pagebreak()
@@ -285,4 +281,84 @@ Just check the difference between $a_n$ and $a_(n+1)$:
     )
   $
 ]
+
+#pagebreak()
+
+= Functions
+
+== Domain & Range (Co-Domain)
+
+$ f: D -> R $
+
+== Image
+
+$ "Im"(f) := { f(x) | x in D } $
+
+
+== Periodic functions
+
+$ f: D -> R $
+
+Then:
+
+$
+  exists T > 0 "st" forall x in D x + T in D \
+  ==> f(x) = f(x + T)
+$
+
+#note[
+  A periodic function can be defined on some interval and
+  extended periodically:
+
+  Let $f(x)$ be a $T$-periodic function defined for $(0, T]$.
+  $f(x)$ for $x = 3T + 1$ is $f(x - 3T) = f(1)$
+]
+
+=== Examples
+
+==== Trigonometric functions
+
+- $sin(alpha x), cos(alpha x)$ are $(2 pi) / alpha$-periodic
+- $tan(alpha x), cot(alpha x)$ are $pi / alpha$-periodic
+
+==== Rational characteristic function
+
+Let $f: RR -> RR$ and $f(x) = cases(x in QQ: 1, "otherwise" 0)$
+
+Then $f$ is $T$-periodic $forall T in QQ$
+
+
+== Symmetric functions
+
+#note[
+  A function is _odd symmetric_ if it is mirrored about the
+  origin, and _even symmetric_ if it is mirrored along the y-axis
+]
+
+From any function $f(x)$ an odd/even symmetric function can be
+built, for example through:
+
+$
+  cases(
+    "even": (f(x) + f(-x)) / 2,
+    "odd": (f(x) - f(-x)) / 2
+  ) 
+$
+
+#note[The division by $2$ is not necessary but convention]
+
+#important[$f(x) = "even version of" f(x) + "odd version of" f(x)$]
+
+=== Examples
+
+- $cos$ is even symmetric
+- $sin$ is odd symmetric
+
+==== Hyperbolic functions
+
+$
+  cosh(x) = (e^x + e^(-x)) / 2: "even" \
+  sinh(x) = (e^x - e^(-x)) / 2: "odd"
+$
+
 
